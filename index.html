@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>portfolio | Mohamed Badra</title>
+  <meta name="description" content="A professional portfolio with responsive design,
+   animations, a testimonials section, and a button to change background colors." />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: linear-gradient(120deg,#0f172a 0%, #071029 100%);
+      --card: rgba(255,255,255,0.04);
+      --accent: #60a5fa;
+      --text: #e6eef8;
+      --glass: rgba(255,255,255,0.06);
+      --radius: 14px;
+      --fw-regular: 400;
+      --fw-bold: 700;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;padding:0;font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);}
+    a{color:inherit}
+
+    /* Page layout */
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    header{position:sticky;top:12px;z-index:40}
+    .nav{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:800}
+    .brand h1{font-size:18px;margin:0}
+
+    nav ul{display:flex;gap:12px;list-style:none;margin:0;padding:0}
+    nav li{padding:8px 12px;border-radius:10px;cursor:pointer}
+    nav li:hover{background:var(--glass)}
+
+    /* mobile navbar */
+    .menu-btn{display:none;background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px;border-radius:8px}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:center;margin-top:18px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:28px;border-radius:18px;backdrop-filter: blur(6px);box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    .hero h2{margin:0 0 8px 0;font-size:26px}
+    .hero p{margin:0 0 16px 0;opacity:0.9}
+    .cta{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{background:var(--accent);padding:10px 14px;border-radius:10px;color:#021022;font-weight:700;border:none;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--text)}
+
+    .portrait{border-radius:16px;overflow:hidden;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center}
+    .portrait img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+
+    /* sections */
+    section{margin-top:28px}
+    .card{background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(2,6,23,0.5)}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .skills{display:flex;gap:8px;flex-wrap:wrap}
+    .skill{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.03)}
+
+    /* projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .project{position:relative;overflow:hidden;border-radius:12px}
+    .project img{width:100%;height:180px;object-fit:cover;display:block;transition:transform .6s}
+    .project:hover img{transform:scale(1.06)}
+    .project .meta{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,0.45);padding:8px 10px;border-radius:8px}
+
+    /* certificates carousel */
+    .certs{display:flex;gap:10px;overflow:auto;padding-bottom:6px}
+    .cert{min-width:220px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px}
+    .cert img{width:100%;height:130px;object-fit:cover;border-radius:8px}
+    .cert .title{margin-top:8px;font-weight:600}
+
+    /* contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:12px}
+    form input,form textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+
+    footer{margin:30px 0 80px 0;text-align:center;opacity:0.8}
+
+    /* animations */
+    .float{animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:all .8s cubic-bezier(.2,.9,.3,1);will-change:transform,opacity}
+    .reveal.show{opacity:1;transform:none}
+
+    /* background controls */
+    .bg-controls{display:flex;gap:8px;align-items:center}
+    .color-btn{width:36px;height:36px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);cursor:pointer}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .projects-grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:repeat(2,1fr)}
+      .contact-grid{grid-template-columns:1fr}
+      nav ul{display:none}
+      .menu-btn{display:inline-block}
+    }
+
+    @media (max-width:480px){
+      .grid-3{grid-template-columns:1fr}
+      .portrait{height:220px}
+    }
+
+    /* small utilities */
+    .muted{opacity:0.75;font-size:13px}
+    .chip{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.03)}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="nav">
+        <div class="brand">
+          <div class="logo">MB</div>
+          <div>
+            <h1>Mohamed Badra</h1>
+            <div class="muted">Engineer / Frontend Developer- Cairo Univ.</div>
+          </div>
+        </div>
+
+        <nav>
+          <ul>
+            <li data-to="hero">Home</li>
+            <li data-to="about">Who I am?</li>
+            <li data-to="skills">Skills</li>
+            <li data-to="projects">Projects</li>
+            <li data-to="certs">The certificates</li>
+            <li data-to="contact">Contact</li>
+          </ul>
+        </nav>
+
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="bg-controls">
+            <button class="color-btn" data-color="default" title="The default setting" style="background:linear-gradient(135deg,#0f172a,#071029)"></button>
+            <button class="color-btn" data-color="ocean" title="Blue"> </button>
+            <button class="color-btn" data-color="sun" title="Sunny"> </button>
+            <button id="toggle-grad" class="menu-btn">Change background</button>
+          </div>
+          <button class="menu-btn" id="hireBtn">Download the biography</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero" class="hero reveal show">
+      <div class="hero-card">
+        <h2>Hello — I am Mohamed Badra</h2>
+        <p>    
+           I am a front-end developer who loves building fast and responsive interfaces with stunning visual effects.
+            I am currently working on projects for university students. .  .
+        </p>
+        <div class="cta">
+          <button class="btn" onclick="scrollToSection('projects')">My works</button>
+          <button class="btn secondary" onclick="scrollToSection('contact')">Get in touch with me</button>
+          <button class="btn secondary" id="themeToggle">Change mode</button>
+        </div>
+
+        <div style="margin-top:18px" class="muted">A quick list of skills: <span class="chip">HTML</span> <span class="chip">CSS</span> <span class="chip">JS</span> <span class="chip">React</span></div>
+      </div>
+
+      <div class="portrait float">
+        
+        <img src="image.0.jpg" alt="Mohamed Badra" 
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="card reveal">
+        <h3>Who I am</h3>
+        <p>I am a student/developer in college interested in user interface design and user 
+            experience. I work on educational and practical projects and I love to 
+            integrate animation professionally to make the experience enjoyable.
+        .</p>
+
+        <div style="margin-top:12px" class="grid-3">
+          <div class="card">
+            <h4>Education</h4>
+            <p class="muted">College of Computer and Information Sciences, Arab Open University </p>
+          </div>
+          <div class="card">
+            <h4>Experience</h4>
+            <p class="muted">University projects, coding competitions, designing interfaces for student projects.</p>
+          </div>
+          <div class="card">
+            <h4>Hobbies</h4>
+            <p class="muted">Digital art, gaming, reading technical books.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="card reveal">
+        <h3>Skills</h3>
+        <div class="skills" style="margin-top:12px">
+          <div class="skill">HTML</div>
+          <div class="skill">CSS (Flex, Grid, Animations)</div>
+          <div class="skill">JavaScript</div>
+          <div class="skill">Responsive Design</div>
+          <div class="skill">Git & GitHub</div>
+          <div class="skill">React (Simplified)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="card reveal">
+        <h3>Projects</h3>
+        <div class="projects-grid" style="margin-top:12px">
+          <div class="project card">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=60" alt="project">
+            <div class="meta">Interactive portfolio project</div>
+          </div>
+          <div class="project card">
+            <img src="30.gpj.png" alt="project">
+            <div class="meta">Student Project Presentation System</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section id="certs">
+      <div class="card reveal">
+        <h3>Certificates</h3>
+        <p class="muted">
+            Add your certificates here — you can upload photos and write details for each certificate.
+        </p>
+        <div class="certs" style="margin-top:12px">
+          
+          <div class="cert card">
+            <img src="100.gpj.jpg" alt="cert1">
+            <div class="title">Python Programming Basic</div>
+            <div class="muted">From Maharah Tech platform
+ </div>
+            <div style="margin-top:8px"><button class="btn" onclick="openCert(this)">Presentation</button></div>
+          </div>
+
+          <div class="cert card">
+            <img src="200.gpj.jpg" alt="cert2">
+            <div class="title">
+                Advanced JavaScript and CSS Course
+            </div>
+            <div class="muted">Skill Tech courses</div>
+            <div style="margin-top:8px"><button class="btn" onclick="openCert(this)">Presentation</button></div>
+          </div>
+
+          <div class="cert card">
+            <img src="300.gpj.jpg" alt="cert3">
+            <div class="title">Internet of Things competition</div>
+            <div class="muted">Second place winner — 2022</div>
+            <div style="margin-top:8px"><button class="btn" onclick="openCert(this)">Presentation</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="card reveal">
+        <h3>Contact me</h3>
+        <div class="contact-grid" style="margin-top:12px">
+          <div>
+            <p class="muted">Send me a message and I will respond to you soon.</p>
+            <form onsubmit="event.preventDefault(); alert('The message has been sent (simulation)')">
+              <input required placeholder="The name" />
+              <input required placeholder="Email" style="margin-top:8px" />
+              <textarea required placeholder="The message" rows="6" style="margin-top:8px"></textarea>
+              <div style="margin-top:8px"><button class="btn" type="submit">Send</button></div>
+            </form>
+          </div>
+
+          <div>
+            <div class="card">
+              <h4>معلومات</h4>
+              <p class="muted">القاهرة، مصر</p>
+              <p class="muted">البريد: mohamed@example.com</p>
+              <div style="margin-top:8px"><button class="btn secondary" onclick="scrollToSection('certs')">عرض الشهادات</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 Mohamed Badra — All rights reserved
+    </footer>
+  </div>
+
+  <script>
+    // smooth scrolling for nav
+    document.querySelectorAll('[data-to]').forEach(el=>{
+      el.addEventListener('click', ()=>{ const id = el.getAttribute('data-to'); scrollToSection(id); })
+    })
+    function scrollToSection(id){ const s=document.getElementById(id); if(s) s.scrollIntoView({behavior:'smooth',block:'start'}) }
+
+    // reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); })
+    },{threshold:0.12})
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el))
+
+    // theme / background controls
+    const root = document.documentElement;
+    const colorBtns = document.querySelectorAll('.color-btn');
+    colorBtns.forEach(b=>{
+      const c = b.dataset.color;
+      if(c==='ocean') b.style.background='linear-gradient(135deg,#0ea5a1,#0369a1)'
+      if(c==='sun') b.style.background='linear-gradient(135deg,#f97316,#facc15)'
+      b.addEventListener('click',()=> setBg(c))
+    })
+    const toggleGrad = document.getElementById('toggle-grad')
+    let gradOn = true
+    toggleGrad.addEventListener('click', ()=>{
+      gradOn = !gradOn; updateBg(); toggleGrad.textContent = gradOn? 'تبديل خلفية' : 'خلفية ثابتة'
+    })
+
+    function setBg(name){ currentBg = name; updateBg() }
+    let currentBg = 'default'
+    function updateBg(){
+      if(currentBg==='ocean'){
+        root.style.setProperty('--bg', gradOn? 'linear-gradient(120deg,#04263b 0%, #013440 100%)' : '#012b3a')
+        root.style.setProperty('--accent','#34d399')
+      }else if(currentBg==='sun'){
+        root.style.setProperty('--bg', gradOn? 'linear-gradient(120deg,#f97316 0%, #facc15 100%)' : '#f59e0b')
+        root.style.setProperty('--accent','#fb923c')
+        root.style.setProperty('--text','#071022')
+      }else{
+        root.style.setProperty('--bg', gradOn? 'linear-gradient(120deg,#0f172a 0%, #071029 100%)' : '#071029')
+        root.style.setProperty('--accent','#60a5fa')
+        root.style.setProperty('--text','#e6eef8')
+      }
+    }
+    updateBg()
+
+    // open certificate (simple modal simulation)
+    function openCert(btn){ const card = btn.closest('.cert'); const title = card.querySelector('.title').innerText; alert('فتح شهادة: '+title+' (محاكاة عرض)') }
+
+    // responsive menu placeholder
+    document.getElementById('hireBtn').addEventListener('click', ()=>{
+      // صنع سيرة ذاتية بسيطة للتحميل (محاكاة) — في نسخة حقيقية يمكن توليد PDF
+      alert('تحميل السيرة (محاكاة)')
+    })
+
+    // small enhancement: clicking project opens demo
+    document.querySelectorAll('.project').forEach(p=>p.addEventListener('click', ()=> alert('فتح المشروع (محاكاة)')))
+
+    // ensure mobile optimisation: tap targets bigger
+    document.querySelectorAll('button').forEach(b=>b.style.minWidth='56px')
+
+    // accessibility: keyboard navigation for nav
+    document.querySelectorAll('nav li').forEach(li=>{ li.tabIndex=0; li.addEventListener('keypress', (e)=>{ if(e.key==='Enter') li.click() }) })
+
+  </script>
+</body>
+</html>
